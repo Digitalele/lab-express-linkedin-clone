@@ -12,10 +12,7 @@ const userSchema = new Schema({
     company: {type: String},
     jobTitle: {type: String}
 }, {
-  timestamps: {
-    createdAt: {type: Date, default: Date.now},
-    updatedAt: {type: Date, default: Date.now}
-  }
+   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
 
 const User = mongoose.model("User", userSchema);

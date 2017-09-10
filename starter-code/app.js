@@ -9,9 +9,10 @@ const session        = require("express-session");
 const MongoSession   = require("connect-mongo")(session);
 const app            = express();
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
+//require routes
+const index = require('./routes/index');
+const users = require('./routes/users');
+const authController = require('./routes/authController');
 
 //Controllers
 
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set("layout", "layouts/main-layout");
 app.use(express.static(path.join(__dirname, "public")));
 
 //Session Cookie
@@ -42,8 +44,10 @@ app.use(session({
 }));
 
 //Routes
+app.use("/", authController);
 app.use('/', index);
 app.use('/users', users);
+
 
 // Authentication
 app.use(cookieParser());
