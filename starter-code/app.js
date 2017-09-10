@@ -6,6 +6,7 @@ const bodyParser     = require("body-parser");
 const mongoose       = require("mongoose");
 const bcrypt     	 = require("bcryptjs");
 const session        = require("express-session");
+const expressLayouts = require("express-ejs-layouts");
 const MongoSession   = require("connect-mongo")(session);
 const app            = express();
 
@@ -13,6 +14,8 @@ const app            = express();
 const index = require('./routes/index');
 const users = require('./routes/users');
 const authController = require('./routes/authController');
+const privateRoutes = require('./routes/private');
+
 
 //Controllers
 
@@ -30,8 +33,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set("layout", "layouts/main-layout");
-app.use(express.static(path.join(__dirname, "public")));
+app.set("layout", "layouts/main");
+app.use(expressLayouts);
+
 
 //Session Cookie
 app.use(session({
@@ -44,13 +48,18 @@ app.use(session({
 }));
 
 //Routes
-app.use("/", authController);
-app.use('/', index);
+app.use('/layouts', index);
 app.use('/users', users);
+app.use('/', authController);
+app.use('/', index);
+app.use('/private', privateRoutes);
 
 
 // Authentication
 app.use(cookieParser());
+
+//Static
+app.use(express.static(path.join(__dirname, "public")));
 
 
 // catch 404 and forward to error handler

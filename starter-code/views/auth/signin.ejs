@@ -1,7 +1,10 @@
 
 <div class="col-sm-6 col-sm-offset-3">
-    <h3>Signup</h3>
-  <form action="/signup" method="post" id="form-container">
+
+
+    <h3>Log In</h3>
+
+    <form action="/signin" method="post" >
         
         <div class="form-group">
             <label for="username">Username:</label>
@@ -17,7 +20,10 @@
             <div class="error-message"><%= message %></div>
         <% } %>
 
-        <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+        <button type="submit" class="btn btn-lg btn-primary">Log In</button>
+        <p class="account-message">
+            Don't have an account? <a href="/signup">Sign up</a>
+        </p>
 
     </form>
 </div>
