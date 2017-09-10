@@ -60,7 +60,10 @@ authController.post("/signup", (req, res, next) => {
 
 //Sign In
 authController.get("/signin", (req, res, next) => {
-  res.render("auth/signin");
+  if (req.session.currentUser) { res.redirect("/")
+  } else {
+  	res.render("auth/signin");
+  }
 });
 
 authController.post("/signin", (req, res, next) => {
@@ -96,8 +99,6 @@ authController.post("/signin", (req, res, next) => {
 });
 
 //Log Out
-
-
 authController.get("/logout", (req, res, next) => {
   if (!req.session.currentUser) { res.redirect("/"); return; }
 
